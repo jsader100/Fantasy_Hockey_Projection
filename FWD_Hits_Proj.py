@@ -42,10 +42,10 @@ y_pred = model.predict(X_test)
 r2 = r2_score(y_test, y_pred)
 print(f"R-squared: {r2}")
 
-df = pd.read_csv('projections.csv')
+df = pd.read_csv('FWD_projections.csv')
 
 X = df[['Hits/60_x', 'Hits/60_y']]
 
 df['Hits_Proj'] = model.predict(X)
 
-df.to_csv('projections.csv')
+df.to_csv('FWD_projections.csv')

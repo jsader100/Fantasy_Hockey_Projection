@@ -142,6 +142,32 @@ def add_blockedshots_proj(df):
     df.to_csv('DF_projections.csv')
 
 
+def add_toi_proj(df):
+    print(df.corr()['TOI/GP'])
+
+    X = df[['TOI/GP_x', 'TOI/GP_y']]
+
+    y = df['TOI/GP']
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1234567)
+
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+
+    r2 = r2_score(y_test, y_pred)
+    print(f"R-squared: {r2}")
+
+    df = pd.read_csv('DF_projections.csv')
+
+    X = df[['TOI/GP_x', 'TOI/GP_y']]
+
+    df['TOI_GP_Proj'] = model.predict(X)
+
+    df.to_csv('DF_projections.csv')
+
+
 year_end = 18
 dfs = []
 
@@ -168,3 +194,4 @@ add_assist_proj(df)
 add_shots_proj(df)
 add_hits_proj(df)
 add_blockedshots_proj(df)
+add_toi_proj(df)
